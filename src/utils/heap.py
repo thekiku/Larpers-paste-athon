@@ -1,14 +1,14 @@
 import heapq
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import List, Tuple
 
 from src.models.queue_entry import QueueEntry
 
 
-@dataclass(slots=True)
+@dataclass(order=True, slots=True)
 class HeapItem:
     sort_key: Tuple[float, int, int]
-    entry: QueueEntry
+    entry: QueueEntry = field(compare=False)
 
 
 class MaxHeap:
