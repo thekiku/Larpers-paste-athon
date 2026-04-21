@@ -1,0 +1,58 @@
+#Algorithm Design
+
+We use a priority-based queue system to dynamically order users based on a computed score.
+
+Each user is assigned a score calculated from multiple factors such as urgency, waiting time, and category weight.
+
+Instead of updating priorities in-place, the system uses a lazy update strategy:
+
+Whenever a user’s priority changes, a new updated entry is inserted into the queue
+Older entries are ignored when retrieved
+Data Structure
+
+Priority Queue (Max Heap)
+
+Each entry in the queue contains:
+
+user_id
+score
+version (used to track latest updates)
+
+A hash map is maintained:
+
+key: user_id
+value: latest version number
+
+This helps identify outdated entries.
+
+Core Operations
+1. Insert User
+Compute score
+Increment version
+Push entry into heap
+
+Time Complexity: O(log n)
+
+2. Update User Priority
+Recalculate score
+Increment version
+Push new entry into heap
+
+Time Complexity: O(log n)
+
+3. Extract Highest Priority User
+Pop from heap
+Check if entry is latest version
+If outdated, discard and pop again
+
+Time Complexity: O(log n) 
+
+Time Complexity Summary
+Insert: O(log n)
+Update: O(log n)
+Extract: O(log n)
+Space Complexity
+Heap stores multiple entries due to lazy updates
+Hash map stores latest version for each user
+
+Overall Space Complexity: O(n)
