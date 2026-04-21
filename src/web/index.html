@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AQIS Dashboard</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --panel: #111a2b;
+      --panel-soft: #17233a;
+      --text: #e8edf7;
+      --muted: #9fb0cc;
+      --accent: #26d2a8;
+      --accent-2: #4ea8ff;
+      --danger: #ff6b81;
+      --border: #253651;
+      --shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 500px at 10% -10%, rgba(78, 168, 255, 0.18), transparent 45%),
+        radial-gradient(1000px 450px at 90% -20%, rgba(38, 210, 168, 0.16), transparent 50%),
+        var(--bg);
+      min-height: 100vh;
+    }
+
+    .container {
+      width: min(1100px, 95vw);
+      margin: 24px auto;
+      display: grid;
+      gap: 16px;
+    }
+
+    .header {
+      padding: 16px 18px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(23, 35, 58, 0.95), rgba(17, 26, 43, 0.95));
+      box-shadow: var(--shadow);
+    }
+
+    .title {
+      margin: 0;
+      font-size: clamp(1.2rem, 2vw, 1.7rem);
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(23, 35, 58, 0.94), rgba(17, 26, 43, 0.94));
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: var(--shadow);
+    }
+
+    .card h2 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .row {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    label {
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    input {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--panel-soft);
+      color: var(--text);
+      padding: 10px 12px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: var(--accent-2);
+      box-shadow: 0 0 0 3px rgba(78, 168, 255, 0.22);
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      border-radius: 10px;
+      padding: 10px 14px;
+      color: #071320;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 120ms ease, filter 120ms ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.08);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #66f0d0);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, var(--accent-2), #8bc6ff);
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #ff7a8f, var(--danger));
+    }
+
+    .status {
+      min-height: 24px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .status.error {
+      color: #ff9aad;
+    }
+
+    .status.success {
+      color: #9df5de;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: rgba(11, 18, 32, 0.45);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 740px;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(37, 54, 81, 0.7);
+      font-size: 0.9rem;
+    }
+
+    th {
+      color: var(--muted);
+      font-weight: 600;
+      background: rgba(17, 26, 43, 0.7);
+      position: sticky;
+      top: 0;
+    }
+
+    .pill {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 5px 10px;
+      background: rgba(78, 168, 255, 0.15);
+      border: 1px solid rgba(78, 168, 255, 0.35);
+      color: #cde4ff;
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section class="header">
+      <h1 class="title">Adaptive Queue Intelligence System</h1>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Add User</h2>
+        <div class="row">
+          <label for="add-name">User Name</label>
+          <input id="add-name" type="text" placeholder="Alice" />
+        </div>
+        <div class="row">
+          <label for="add-id">User ID</label>
+          <input id="add-id" type="text" placeholder="user-123" />
+        </div>
+        <div class="row">
+          <label for="add-urgency">Urgency</label>
+          <input id="add-urgency" type="number" min="0" step="0.1" placeholder="8" />
+        </div>
+        <div class="row">
+          <label for="add-category">Category Weight</label>
+          <input id="add-category" type="number" min="0" step="0.1" placeholder="5" />
+        </div>
+        <div class="actions">
+          <button class="btn-primary" id="btn-add">Create User</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Update User Priority</h2>
+        <div class="row">
+          <label for="upd-id">User ID</label>
+          <input id="upd-id" type="text" placeholder="user-123" />
+        </div>
+        <div class="row">
+          <label for="upd-urgency">Urgency (optional)</label>
+          <input id="upd-urgency" type="number" min="0" step="0.1" placeholder="10" />
+        </div>
+        <div class="row">
+          <label for="upd-category">Category Weight (optional)</label>
+          <input id="upd-category" type="number" min="0" step="0.1" placeholder="6" />
+        </div>
+        <div class="actions">
+          <button class="btn-secondary" id="btn-update">Update Priority</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Queue Actions</h2>
+        <div class="actions">
+          <button class="btn-secondary" id="btn-refresh">Refresh Queue</button>
+          <button class="btn-danger" id="btn-next">Get Next User</button>
+        </div>
+        <p class="subtitle">Next user:</p>
+        <div id="next-user" class="pill">No user extracted yet</div>
+      </article>
+    </section>
+
+    <section class="card">
+      <h2>Ordered Active Queue</h2>
+      <p id="status" class="status">Ready.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>User Name</th>
+              <th>User ID</th>
+              <th>Urgency</th>
+              <th>Category Weight</th>
+              <th>Arrival Time (ms)</th>
+              <th>Version</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody id="queue-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const statusEl = document.getElementById("status");
+    const queueBodyEl = document.getElementById("queue-body");
+    const nextUserEl = document.getElementById("next-user");
+
+    function setStatus(message, type) {
+      statusEl.textContent = message;
+      statusEl.className = "status" + (type ? " " + type : "");
+    }
+
+    function toNumberOrNull(value) {
+      if (value === "" || value === null || value === undefined) return null;
+      const parsed = Number(value);
+      return Number.isNaN(parsed) ? null : parsed;
+    }
+
+    function renderQueue(users) {
+      queueBodyEl.innerHTML = "";
+      if (!users || users.length === 0) {
+        const row = document.createElement("tr");
+        row.innerHTML = '<td colspan="7">Queue is empty.</td>';
+        queueBodyEl.appendChild(row);
+        return;
+      }
+
+      users.forEach((u) => {
+        const displayName = u.user_name ?? u.user_id ?? u.username ?? u.id ?? "-";
+        const displayId = u.user_id ?? u.id ?? "-";
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${displayName}</td>
+          <td>${displayId}</td>
+          <td>${u.urgency}</td>
+          <td>${u.category_weight}</td>
+          <td>${u.arrival_time_ms}</td>
+          <td>${u.version}</td>
+          <td>${Number(u.score).toFixed(4)}</td>
+        `;
+        queueBodyEl.appendChild(row);
+      });
+    }
+
+    async function requestJson(url, options = {}) {
+      const response = await fetch(url, {
+        headers: { "Content-Type": "application/json" },
+        ...options,
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        const detail = data.detail || "Request failed";
+        throw new Error(detail);
+      }
+      return data;
+    }
+
+    async function refreshQueue() {
+      try {
+        const data = await requestJson("/queue");
+        renderQueue(data.users || []);
+        setStatus("Queue refreshed.", "success");
+      } catch (error) {
+        setStatus(error.message, "error");
+      }
+    }
+
+    async function addUser() {
+      const userName = document.getElementById("add-name").value.trim();
+      const userId = document.getElementById("add-id").value.trim();
+      const urgency = toNumberOrNull(document.getElementById("add-urgency").value);
+      const categoryWeight = toNumberOrNull(document.getElementById("add-category").value);
+
+      if (!userId || urgency === null || categoryWeight === null) {
+        setStatus("Add user needs user_id, urgency, and category_weight.", "error");
+        return;
+      }
+
+      try {
+        await requestJson("/user", {
+          method: "POST",
+          body: JSON.stringify({
+            user_id: userId,
+            user_name: userName || userId,
+            urgency,
+            category_weight: categoryWeight,
+          }),
+        });
+        setStatus("User added.", "success");
+        await refreshQueue();
+      } catch (error) {
+        setStatus(error.message, "error");
+      }
+    }
+
+    async function updateUser() {
+      const userId = document.getElementById("upd-id").value.trim();
+      const urgency = toNumberOrNull(document.getElementById("upd-urgency").value);
+      const categoryWeight = toNumberOrNull(document.getElementById("upd-category").value);
+
+      if (!userId) {
+        setStatus("Update needs user_id.", "error");
+        return;
+      }
+      if (urgency === null && categoryWeight === null) {
+        setStatus("Provide urgency or category_weight for update.", "error");
+        return;
+      }
+
+      const payload = {};
+      if (urgency !== null) payload.urgency = urgency;
+      if (categoryWeight !== null) payload.category_weight = categoryWeight;
+
+      try {
+        await requestJson(`/user/${encodeURIComponent(userId)}`, {
+          method: "PUT",
+          body: JSON.stringify(payload),
+        });
+        setStatus("User updated.", "success");
+        await refreshQueue();
+      } catch (error) {
+        setStatus(error.message, "error");
+      }
+    }
+
+    async function getNextUser() {
+      try {
+        const data = await requestJson("/next");
+        const displayName = data.user_name ?? data.user_id ?? data.username ?? data.id ?? "-";
+        nextUserEl.textContent = `${displayName} | score ${Number(data.score).toFixed(4)} | v${data.version}`;
+        setStatus("Extracted highest-priority user.", "success");
+        await refreshQueue();
+      } catch (error) {
+        setStatus(error.message, "error");
+      }
+    }
+
+    document.getElementById("btn-add").addEventListener("click", addUser);
+    document.getElementById("btn-update").addEventListener("click", updateUser);
+    document.getElementById("btn-refresh").addEventListener("click", refreshQueue);
+    document.getElementById("btn-next").addEventListener("click", getNextUser);
+
+    refreshQueue();
+  </script>
+</body>
+</html>
